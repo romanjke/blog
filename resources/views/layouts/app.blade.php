@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }} - @yield('title')</title>
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -34,10 +34,13 @@
                 </div>
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav">
-                        &nbsp;
-                    </ul>
+                    @auth
+                        <!-- Left Side Of Navbar -->
+                        <ul class="nav navbar-nav">
+                            <li><a href="{{ route('admin') }}">DASHBOARD</a></li>
+                            <li><a href="{{ route('posts.index') }}">POSTS</a></li>
+                        </ul>
+                    @endauth
 
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
@@ -71,7 +74,18 @@
             </div>
         </nav>
 
-        @yield('content')
+        <div class="container">
+            @if (Session::has('success'))
+                @component('components.success')
+                {{ Session::get('success') }}
+                @endcomponent
+            @endif
+
+            <h1>@yield('title')</h1>
+
+            @yield('content')
+        </div>
+
     </div>
 
     <!-- Scripts -->
