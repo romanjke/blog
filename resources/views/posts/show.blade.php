@@ -13,6 +13,5 @@
         @endslot
 
         <p>{{ $post->content }}</p>
-
     @endcomponent
 @endsection
