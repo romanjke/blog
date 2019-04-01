@@ -1,0 +1,56 @@
+.form-comment {
+    &__text {
+        resize: none;
+    }
+}
+
+.post {
+    &__footer {
+        border-top: none;
+        background-color: inherit;
+    }
+}
+
+.comment {
+    margin-bottom: 0;
+    border-bottom-color: #d3e0e9;
+
+    &:last-child {
+        border: none;
+        box-shadow: none;
+    }
+
+    &__heading {
+        color: #333333;
+    }
+
+    &__body {
+        padding: 10px 15px;
+    }
+
+    &__footer {
+        border-top: none;
+        background-color: inherit;
+    }
+}
+
+.admin-toolbar {
+    margin-bottom: 0;
+    padding-left: 0;
+
+    &__item {
+        display: inline-block;
+        margin-left: 10px;
+    }
+
+    &__delete {
+        padding: 0;
+        color: #3097D1;
+        background-color: #fff;
+        border: 0;
+
+        &:hover {
+            color: #216a94;
+        }
+    }
+}

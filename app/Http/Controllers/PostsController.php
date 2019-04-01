@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Post;
+use App\Comment;
 use Auth;
 
 class PostsController extends Controller
@@ -16,7 +17,7 @@ class PostsController extends Controller
      */
     public function index()
     {
-        $posts = Post::orderBy('id', 'DESC')->paginate('10');
+        $posts = Post::orderBy('id', 'desc')->paginate('10');
 
         return view('posts.index', compact('posts'));
     }
@@ -56,8 +57,9 @@ class PostsController extends Controller
     public function show($id)
     {
         $post = Post::find($id);
+        $comments = Comment::where('post_id', $id)->orderBy('id', 'desc')->get();
 
-        return view('posts.show', compact('post'));
+        return view('posts.show', compact('post', 'comments'));
     }
 
     /**
@@ -87,7 +89,7 @@ class PostsController extends Controller
         $post->fill($request->all());
         $post->save();
 
-        return redirect(route('posts.index'))->with('success', 'Post updated successfully!');
+        return redirect(route('posts.show', compact('post')))->with('success', 'Post updated successfully!');
     }
 
     /**
