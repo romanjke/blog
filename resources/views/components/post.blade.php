@@ -3,9 +3,9 @@
     <div class="post__body panel-body">
         {{ $slot }}
     </div>
-    @auth
+    @can('change', $post)
     <div class="post__footer panel-footer">
         {{ $footer }}
     </div>
-    @endauth
+    @endcan
 </div>

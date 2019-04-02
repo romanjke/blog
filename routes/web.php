@@ -11,21 +11,21 @@
 |
 */
 
-Route::get('/', 'HomeController@index')->name('home.index');
-Route::get('/posts/{id}', 'HomeController@show')->name('home.show');
-
 Auth::routes();
 
-Route::group(['middleware' => 'auth'], function(){
-    // Dashboard
-    Route::get('/admin', 'AdminController@index')->name('admin');
+Route::get('/', 'HomeController@index')->name('home.index');
+Route::get('/posts/{post}', 'HomeController@show')->name('home.show');
+
+Route::group(['middleware' => 'can:admin'], function(){
+    // Admin panel
+    Route::get('/admin', 'AdminController@index')->name('admin.index');
 
     // Posts
     Route::resource('/admin/posts', 'PostsController');
-
-    // Comments
-    Route::post('/{post}/comments', 'CommentsController@store')->name('comments.store');
-    Route::get('/comments/{comment}/edit', 'CommentsController@edit')->name('comments.edit');
-    Route::put('/comments/{comment}', 'CommentsController@update')->name('comments.update');
-    Route::delete('/comments/{comment}', 'CommentsController@destroy')->name('comments.destroy');
 });
+
+// Comments
+Route::post('{post}/comments', 'CommentsController@store')->name('comments.store');
+Route::get('/comments/{comment}/edit', 'CommentsController@edit')->name('comments.edit');
+Route::put('/comments/{comment}', 'CommentsController@update')->name('comments.update');
+Route::delete('/comments/{comment}', 'CommentsController@destroy')->name('comments.destroy');

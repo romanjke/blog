@@ -19,6 +19,8 @@ class CommentsController extends Controller
      */
     public function store(Request $request, Post $post)
     {
+        $this->authorize('create', Comment::class);
+
         $this->validateInput($request);
 
         $comment = new Comment();
@@ -26,7 +28,7 @@ class CommentsController extends Controller
         $comment->post_id = $post->id;
         Auth::user()->comments()->save($comment);
 
-        return redirect(route('posts.show', compact('post')))->with('success', 'Comment added successfully!');
+        return redirect(route('home.show', compact('post')))->with('success', 'Comment added successfully!');
     }
 
     /**
@@ -37,6 +39,8 @@ class CommentsController extends Controller
      */
     public function edit(Comment $comment)
     {
+        $this->authorize('change', $comment);
+
         return view('comments.edit', compact('comment'));
     }
 
@@ -44,18 +48,19 @@ class CommentsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  Post  $post
      * @param  Comment  $comment
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Comment $comment)
     {
+        $this->authorize('change', $comment);
+
         $this->validateInput($request);
 
         $comment->comment = $request->input('comment');
         $comment->save();
 
-        return redirect(route('posts.show', ['post' => $comment->post]))->with('success', 'Comment updated successfully!');
+        return redirect(route('home.show', ['post' => $comment->post]))->with('success', 'Comment updated successfully!');
     }
 
     /**
@@ -66,9 +71,11 @@ class CommentsController extends Controller
      */
     public function destroy(Comment $comment)
     {
+        $this->authorize('change', $comment);
+
         $comment->delete();
 
-        return redirect(route('posts.show', ['post' => $comment->post]))->with('success', 'Comment deleted successfully!');
+        return redirect(route('home.show', ['post' => $comment->post]))->with('success', 'Comment deleted successfully!');
     }
 
     private function validateInput($request)

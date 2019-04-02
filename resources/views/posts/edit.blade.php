@@ -6,7 +6,7 @@
 
 @section('content')
     @component('components.panel')
-        {{ Form::open(['route' => ['posts.update', $post->id], 'method' => 'put', 'class' => 'form-horizontal']) }}
+        {{ Form::open(['route' => ['posts.update', $post], 'method' => 'put', 'class' => 'form-horizontal']) }}
             {{ Form::bsText('title', 'Title', $post->title, ['required' => 'required']) }}
             {{ Form::bsTextArea('content', 'Content', $post->content, ['required' => 'required']) }}
             <hr>

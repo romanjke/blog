@@ -17,6 +17,8 @@ class PostsController extends Controller
      */
     public function index()
     {
+        $this->authorize('create', Post::class);
+
         $posts = Post::orderBy('id', 'desc')->paginate('10');
 
         return view('posts.index', compact('posts'));
@@ -29,6 +31,8 @@ class PostsController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Post::class);
+
         return view('posts.create');
     }
 
@@ -40,6 +44,8 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', Post::class);
+
         $this->validateInput($request);
 
         $post = new Post($request->all());
@@ -51,13 +57,14 @@ class PostsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Post $post)
     {
-        $post = Post::find($id);
-        $comments = Comment::where('post_id', $id)->orderBy('id', 'desc')->get();
+        $this->authorize('view', $post);
+
+        $comments = $post->comments()->orderBy('id', 'desc')->get();
 
         return view('posts.show', compact('post', 'comments'));
     }
@@ -65,12 +72,13 @@ class PostsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        $post = Post::find($id);
+        $this->authorize('change', $post);
+
         return view('posts.edit', compact('post'));
     }
 
@@ -78,14 +86,15 @@ class PostsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
+        $this->authorize('change', $post);
+
         $this->validateInput($request);
 
-        $post = Post::find($id);
         $post->fill($request->all());
         $post->save();
 
@@ -95,12 +104,13 @@ class PostsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        $post = Post::find($id);
+        $this->authorize('change', $post);
+
         $post->delete();
 
         return redirect(route('posts.index'))->with('success', 'Post deleted successfully!');

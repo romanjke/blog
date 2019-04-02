@@ -24,13 +24,12 @@ class HomeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Post $post)
     {
-        $post = Post::find($id);
-        $comments = Comment::where('post_id', $id)->orderBy('id', 'desc')->get();
+        $comments = $post->comments()->orderBy('id', 'desc')->get();
 
         return view('posts.show', compact('post', 'comments'));
     }

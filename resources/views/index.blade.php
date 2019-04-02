@@ -18,7 +18,7 @@
                 @foreach($posts as $post)
                 <tr>
                     <td>
-                        <a href="{{ route('home.show', ['id' => $post->id]) }}">{{ $post->title }}</a>
+                        <a href="{{ route('home.show', ['post' => $post]) }}">{{ $post->title }}</a>
                     </td>
                     <td>{{ $post->user->name }}</td>
                     <td>{{ date("F j, Y, H:i", strtotime($post->created_at)) }}</td>
