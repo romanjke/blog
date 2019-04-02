@@ -4,6 +4,6 @@
 
 @section('content')
     @component('components.panel')
-        You are logged in!
+        @lang('app.logged_in')
     @endcomponent
 @endsection

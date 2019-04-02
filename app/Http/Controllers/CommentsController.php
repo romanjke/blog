@@ -28,7 +28,7 @@ class CommentsController extends Controller
         $comment->post_id = $post->id;
         Auth::user()->comments()->save($comment);
 
-        return redirect(route('home.show', compact('post')))->with('success', 'Comment added successfully!');
+        return redirect(route('home.show', compact('post')))->with('success', trans('comments.added'));
     }
 
     /**
@@ -60,7 +60,7 @@ class CommentsController extends Controller
         $comment->comment = $request->input('comment');
         $comment->save();
 
-        return redirect(route('home.show', ['post' => $comment->post]))->with('success', 'Comment updated successfully!');
+        return redirect(route('home.show', ['post' => $comment->post]))->with('success', trans('comments.updated'));
     }
 
     /**
@@ -75,7 +75,7 @@ class CommentsController extends Controller
 
         $comment->delete();
 
-        return redirect(route('home.show', ['post' => $comment->post]))->with('success', 'Comment deleted successfully!');
+        return redirect(route('home.show', ['post' => $comment->post]))->with('success', trans('comments.deleted'));
     }
 
     private function validateInput($request)

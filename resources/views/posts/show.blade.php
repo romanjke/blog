@@ -8,7 +8,7 @@
     @component('components.post', ['post' => $post])
         @slot('title')
             <div class="pull-left">{{ $post->user->name }}</div>
-            <div class="pull-right">{{ date("F j, Y, H:i", strtotime($post->created_at)) }}</div>
+            <div class="pull-right">{{ $post->created_at->format('d/m/Y, H:i') }}</div>
             <div class="clearfix"></div>
         @endslot
 
@@ -29,14 +29,14 @@
         @endslot
     @endcomponent
 
-    <p><strong>Comments</strong></p>
+    <p><strong>@lang('comments.comments')</strong></p>
     <hr>
     @can('create', App\Comment::class)
         @component('components.panel')
             {{ Form::open(['route' => ['comments.store', $post], 'method' => 'post', 'class' => 'form-horizontal']) }}
                 <div class="form-group{{ $errors->has('comment') ? ' has-error' : '' }} form-comment">
                     <div class="col-md-12">
-                        {{ Form::textarea('comment', old('comment'), array('class' => 'form-control form-comment__text', 'required' => 'required', 'rows' => '3', 'placeholder' => 'Your comment')) }}
+                        {{ Form::textarea('comment', old('comment'), array('class' => 'form-control form-comment__text', 'required' => 'required', 'rows' => '3', 'placeholder' => trans('comments.placeholder'))) }}
 
                         @if ($errors->has('comment'))
                             <span class="help-block">
@@ -46,7 +46,7 @@
                     </div>
                 </div>
                 <div class="pull-right">
-                    {{ Form::submit('Add Your Comment', ['class' => 'btn btn-success']) }}
+                    {{ Form::submit(trans('comments.add'), ['class' => 'btn btn-success']) }}
                 </div>
             {{ Form::close() }}
         @endcomponent
@@ -57,7 +57,7 @@
             @component('components.comment', ['comment' => $comment])
                 @slot('title')
                     <div class="pull-left">{{ $comment->user->name }}</div>
-                    <div class="pull-right">{{ date("F j, Y, H:i", strtotime($comment->created_at)) }}</div>
+                    <div class="pull-right">{{ $post->created_at->format('d/m/Y, H:i') }}</div>
                     <div class="clearfix"></div>
                 @endslot
 
@@ -72,7 +72,6 @@
                         </li>
                         <li class="admin-toolbar__item">
                             {{ Form::postLink(['comments.destroy', $comment], 'delete', '', ['class' => 'admin-toolbar__delete'], 'fas fa-trash-alt') }}
-
                         </li>
                     </ul>
                     <div class="clearfix"></div>

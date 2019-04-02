@@ -4,7 +4,7 @@
 
             <!-- Collapsed Hamburger -->
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse" aria-expanded="false">
-                <span class="sr-only">Toggle Navigation</span>
+                <span class="sr-only">@lang('navigation.toggle')</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -12,14 +12,14 @@
 
             <!-- Branding Image -->
             <a class="navbar-brand" href="{{ url('/admin') }}">
-                Admin panel
+                @lang('navigation.admin')
             </a>
         </div>
 
         <div class="collapse navbar-collapse" id="app-navbar-collapse">
             <!-- Left Side Of Navbar -->
             <ul class="nav navbar-nav">
-                <li><a href="{{ route('home.index') }}"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="{{ route('home.index') }}"><i class="fas fa-home"></i> @lang('navigation.home')</a></li>
             </ul>
 
             <!-- Right Side Of Navbar -->
@@ -35,7 +35,7 @@
                             <a href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
                                          document.getElementById('logout-form').submit();">
-                                Logout
+                                @lang('navigation.logout')
                             </a>
 
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

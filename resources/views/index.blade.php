@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    Posts
+    @lang('posts.heading')
 @endsection
 
 @section('content')
@@ -9,9 +9,9 @@
         <table class='table'>
             <thead>
                 <tr>
-                    <th>Title</th>
-                    <th>Author</th>
-                    <th>Date</th>
+                    <th>@lang('posts.title')</th>
+                    <th>@lang('posts.author')</th>
+                    <th>@lang('posts.date')</th>
                 </tr>
             </thead>
             <tbody>
@@ -21,7 +21,7 @@
                         <a href="{{ route('home.show', ['post' => $post]) }}">{{ $post->title }}</a>
                     </td>
                     <td>{{ $post->user->name }}</td>
-                    <td>{{ date("F j, Y, H:i", strtotime($post->created_at)) }}</td>
+                    <td>{{ $post->created_at->format('d/m/Y, H:i') }}</td>
                 </tr>
                 @endforeach
             </tbody>

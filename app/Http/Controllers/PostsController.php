@@ -51,7 +51,7 @@ class PostsController extends Controller
         $post = new Post($request->all());
         Auth::user()->posts()->save($post);
 
-        return redirect(route('posts.index'))->with('success', 'Post added successfully!');
+        return redirect(route('posts.index'))->with('success', trans('posts.added'));
     }
 
     /**
@@ -98,7 +98,7 @@ class PostsController extends Controller
         $post->fill($request->all());
         $post->save();
 
-        return redirect(route('posts.show', compact('post')))->with('success', 'Post updated successfully!');
+        return redirect(route('posts.show', compact('post')))->with('success', trans('posts.updated'));
     }
 
     /**
@@ -113,7 +113,7 @@ class PostsController extends Controller
 
         $post->delete();
 
-        return redirect(route('posts.index'))->with('success', 'Post deleted successfully!');
+        return redirect(route('posts.index'))->with('success', trans('posts.deleted'));
     }
 
     private function validateInput($request)
